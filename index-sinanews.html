@@ -90,28 +90,10 @@
                 getData(function(data){
                     if(data){
                         if(!firstLoad){
-                            start.firstImg(data[0])
-                            data.splice(0, 1)
-                        }
-                            
-                        
-                        var i = 1
-                        data.forEach(function(item, index){
-                            var $node = 'node'+index
-                            $node = getNode(item)
-                            $node.find('img').load(function(){                           
-                                $ul.append($node)  
-                                waterfull($node)
-                                console.log(i)
-                                console.log(data.length)
-                                if(i===data.length){
-                                    
-                                    isDataArrived = true
-                                }
-                                i++
-                                // console.log($loading.offset().top)
-                            })
-                        })
+                            start.firstImg(data)
+                        }else{
+                            start.load(data)
+                        }                            
                         $loading.css('visibility', 'hidden')
                     }else{
                         $loading.text('没有了')
@@ -122,14 +104,13 @@
             },
 
             firstImg: function(data){
-                var $node = getNode(data)
+                var $node = getNode(data[0])
                 $node.css({
                     left: 0,
                     top: 0
                 })
                 $node.find('img').load(function(){
                     $ul.append($node)  
-                    firstLoad = true
                     
                     colCount = Math.floor($wrap.width()/$node.outerWidth(true))
                     for(var i=0; i<colCount; i++){
@@ -139,8 +120,34 @@
                     colHeightArray[0] = $node.outerHeight(true)
                     minIndex = 1
                     minValue = 0
+                    firstLoad = true
+
+                    console.log(data)
+
+                    data.splice(0, 1)
+                    start.load(data)
+
+                })
+            },
+
+            load: function(data){
+                var i = 1
+                data.forEach(function(item, index){
+                    var $node = 'node'+index
+                    $node = getNode(item)
+                    $node.find('img').load(function(){                           
+                        $ul.append($node)  
+                        waterfull($node)
+                        console.log(i)
+                        console.log(data.length)
+                        if(i===data.length){
+                            isDataArrived = true
+                        }
+                        i++
+                    })
                 })
             }
+
         }
 
         start.init()
