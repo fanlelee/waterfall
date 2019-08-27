@@ -121,9 +121,6 @@
                     minIndex = 1
                     minValue = 0
                     firstLoad = true
-
-                    console.log(data)
-
                     data.splice(0, 1)
                     start.load(data)
 
@@ -138,8 +135,6 @@
                     $node.find('img').load(function(){                           
                         $ul.append($node)  
                         waterfull($node)
-                        console.log(i)
-                        console.log(data.length)
                         if(i===data.length){
                             isDataArrived = true
                         }
@@ -158,7 +153,6 @@
             }
 
             if(visible($('.load'))){
-                console.log('kanjianle')
                 $loading.css('visibility', 'visible')
                 isDataArrived = false
                 start.init()
@@ -226,9 +220,6 @@
         }
 
         function visible($target){
-            console.log($(window).scrollTop())
-            console.log($(window).height())
-            console.log($target.offset().top)
             return $(window).scrollTop() + $(window).height() >= $target.offset().top            
         }
 
